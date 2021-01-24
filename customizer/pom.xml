@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.nationsky</groupId>
+		<artifactId>cms-parent</artifactId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>cms-service</artifactId>
+	<name>cms-service</name>
+	<packaging>jar</packaging>
+
+	<properties>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.openjpa</groupId>
+			<artifactId>openjpa-all</artifactId>
+			<version>2.4.0</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>gen_entity</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>java</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<mainClass>org.apache.openjpa.jdbc.meta.ReverseMappingTool</mainClass>
+							<commandlineArgs>
+								-cc com.nationsky.cms.domain.MyPropertiesReverseCustomizer -ann true -no true -md none -pkg com.nationsky.cms.domain.test -d ./src/main/java/com/nationsky/cms/domain/test -p ./persistence.xml
+							</commandlineArgs>
+							<includePluginDependencies>true</includePluginDependencies>
+							<addResourcesToClasspath>true</addResourcesToClasspath>
+							<workingDirectory>.</workingDirectory>
+						</configuration>
+						<dependencies>
+							<dependency>
+								<groupId>javax.validation</groupId>
+								<artifactId>validation-api</artifactId>
+								<version>1.0.CR3</version>
+							</dependency>
+							<dependency>
+								<groupId>org.apache.openjpa</groupId>
+								<artifactId>openjpa-all</artifactId>
+								<version>2.0.1</version>
+							</dependency>
+						</dependencies>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+
+</project>
